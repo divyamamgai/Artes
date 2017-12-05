@@ -8,6 +8,7 @@ class User(db.Model):
     name = db.Column(db.String(250), nullable=False)
     email = db.Column(db.String(250), unique=True, nullable=False)
     image_url = db.Column(db.String(250), nullable=False)
+    google_plus_link = db.Column(db.String(250), nullable=False)
 
     @property
     def serialize(self):
@@ -38,8 +39,10 @@ class Skill(db.Model):
 class UserSkill(db.Model):
     __tablename__ = 'user_skills'
 
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
-    skill_id = db.Column(db.Integer, db.ForeignKey('skills.id'), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
+                        primary_key=True)
+    skill_id = db.Column(db.Integer, db.ForeignKey('skills.id'),
+                         primary_key=True)
     user = db.relationship(User)
     skill = db.relationship(Skill)
 
@@ -55,9 +58,12 @@ class UserSkill(db.Model):
 class Endorse(db.Model):
     __tablename__ = 'endorses'
 
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
-    skill_id = db.Column(db.Integer, db.ForeignKey('skills.id'), primary_key=True)
-    endorser_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
+                        primary_key=True)
+    skill_id = db.Column(db.Integer, db.ForeignKey('skills.id'),
+                         primary_key=True)
+    endorser_id = db.Column(db.Integer, db.ForeignKey('users.id'),
+                            primary_key=True)
     user = db.relationship(User, foreign_keys=[user_id])
     skill = db.relationship(Skill)
     endorser = db.relationship(User, foreign_keys=[endorser_id])

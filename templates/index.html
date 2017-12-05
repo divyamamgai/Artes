@@ -1,14 +1,24 @@
 {% extends "_main.html" %}
 
-{% block title %} Artes - Skills {% endblock %}
+{% set title = 'Artes - Skills' %}
 
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 border-right">
-                <div class="photo"></div>
-                <span class="user-name">User Name</span>
-                <a class="link" href="mailto:useremail@example.com">useremail@example.com</a>
+                <div class="photo"
+                     style="background-image: url('{{ flask_session.get('image_url') }}')"></div>
+                <span class="user-name">{{ flask_session.get('name') }}</span>
+                <a class="link"
+                   href="mailto:{{ flask_session.get('email') }}">
+                    {{ flask_session.get('email') }}
+                </a>
+                <a class="link"
+                   href="{{ flask_session.get('google_plus_link') }}"
+                   target="_blank">
+                    <span class="fa fa-google-plus"></span>
+                    Profile
+                </a>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">
                 <h2>Skills</h2>

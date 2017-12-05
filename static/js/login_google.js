@@ -17,7 +17,7 @@
                 contentType: 'application/octet-stream; charset=utf-8',
                 success: function (result, status) {
                     if (status === 'success') {
-                        w.location.href = '/catalog';
+                        w.location.href = '/';
                     } else {
                         alert('Error occurred in the login process.\nMessage: ' + result);
                         $loginButton.css('display', 'block');

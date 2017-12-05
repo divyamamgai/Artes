@@ -13,7 +13,7 @@
     {% block additional_scripts %}{% endblock %}
 </head>
 <body>
-<header>`
+<header>
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 {{ header_class_modifier }}">
@@ -31,7 +31,8 @@
                     Artes
                 </h1>
                 {% if 'access_token' in flask_session %}
-                    <a href="{{ url_for('logout') }}" class="button" title="Logout">
+                    <a href="{{ url_for('logout') }}" class="button"
+                       title="Logout">
                         <span class="fa fa-sign-out"></span>
                         Logout
                     </a>
@@ -64,14 +65,16 @@
     {% block content %}{% endblock %}
 </section>
 <footer>
-    <a href="https://github.com/divyamamgai/WantedlyTask" target="_blank" title="GitHub Repo"><span
+    <a href="https://github.com/divyamamgai/WantedlyTask" target="_blank"
+       title="GitHub Repo"><span
             class="fa fa-github"></span></a>
     <div class="attribution">
         Icons made by
         <a href="http://www.freepik.com" title="Freepik">Freepik</a>
         from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
         is licensed by
-        <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">
+        <a href="http://creativecommons.org/licenses/by/3.0/"
+           title="Creative Commons BY 3.0" target="_blank">
             CC 3.0 BY
         </a>
     </div>
