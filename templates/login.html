@@ -1,0 +1,35 @@
+{% extends "_main.html" %}
+
+{% set title = 'Artes - Login' %}
+
+{% block additional_scripts %}
+    <script src="//apis.google.com/js/platform.js?onload=start"></script>
+    <script>
+        window.login_state = '{{login_state}}';
+    </script>
+    <script src="/static/js/login_google.min.js"></script>
+{% endblock %}
+
+{% set header_class_modifier = 'login-header' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                <h2>Login</h2>
+                <div class="login-button">
+                <span class="g-signin"
+                      data-scope="openid email"
+                      data-clientid="476147374731-68gqob3hdf0djm94l68efe8n35r035an.apps.googleusercontent.com"
+                      data-redirecturi="postmessage"
+                      data-accesstype="offline"
+                      data-cookiepolicy="single_host_origin"
+                      data-callback="googleLogin"
+                      data-approvalprompt="force">
+                </span>
+                </div>
+                <span id="login-loader" class="fa fa-spinner"></span>
+            </div>
+        </div>
+    </div>
+{% endblock %}

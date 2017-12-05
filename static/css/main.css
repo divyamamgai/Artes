@@ -76,6 +76,12 @@ header {
     box-shadow: 0 1rem 10rem rgba(0, 0, 0, 0.11);
 }
 
+header .login-header {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+    text-align: center;
+}
+
 header h1 {
     display: inline-block;
     font-weight: 300;
