@@ -319,9 +319,13 @@ footer {
     color: #656565;
 }
 
+.login-button {
+    padding-top: 2rem;
+}
+
 #login-loader {
     display: none;
-    padding: 1rem;
+    padding: 2rem 0 0 0;
     margin: auto;
     font-size: 4.8rem;
 }
