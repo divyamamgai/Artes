@@ -2,10 +2,18 @@
 
 {% set title = 'Artes - ' + user.get('name') + ' Skills' %}
 
+{% block additional_stylesheets %}
+    <link rel="stylesheet" href="/static/css/tokenize2.min.css">
+{% endblock %}
+
+{% block additional_scripts %}
+    <script type="text/javascript" src="/static/js/tokenize2.min.js"></script>
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3 border-right padding-bottom-3">
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3 border-right padding-bottom-1-dot-5">
                 <div class="photo"
                      style="background-image: url('{{ user.get('image_url') }}')">
                 </div>
