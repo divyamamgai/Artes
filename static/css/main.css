@@ -386,6 +386,11 @@ footer {
     box-shadow: none;
 }
 
+.add-skills-loading {
+    padding: 1rem;
+    font-size: 3rem;
+}
+
 .skill-list {
     margin: 2rem 0 0 0;
     padding: 0;

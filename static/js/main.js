@@ -1,6 +1,7 @@
 (function (w, d, $) {
     /** @type JQuery */
     var $addSkillsInput,
+        $addSkillsLoading,
         $skillList,
         $skillCache = $('<li class="skill"><span class="skill-name"></span></li>');
 
@@ -48,6 +49,7 @@
                 }
             });
         }
+        $addSkillsLoading = $('.add-skills-loading', d);
 
         $skillList = $('.skill-list', d);
     });
@@ -65,12 +67,17 @@
             $('#pop-up-add-skills', d).css('display', 'block');
         })
         .on('click', '#add-skills-submit-button', function () {
+            var $addSkillsSubmitButton = $(this);
             $.ajax('/skills/add/', {
                 method: 'POST',
                 data: {
                     skill_ids: $addSkillsInput.val()
                 },
                 dataType: 'json',
+                beforeSend: function () {
+                    $addSkillsSubmitButton.addClass('hide');
+                    $addSkillsLoading.removeClass('hide');
+                },
                 success: function (skills) {
                     appendSkills(skills);
 
@@ -79,6 +86,10 @@
                 },
                 error: function () {
                     alert('Error occurred while adding skills, please try again!');
+                },
+                complete: function () {
+                    $addSkillsSubmitButton.removeClass('hide');
+                    $addSkillsLoading.addClass('hide');
                 }
             });
         })
