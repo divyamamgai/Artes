@@ -1,0 +1,60 @@
+{% extends "_main.html" %}
+
+{% set title = 'Artes - ' + user.get('name') + ' Skills' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3 border-right padding-bottom-3">
+                <div class="photo"
+                     style="background-image: url('{{ user.get('image_url') }}')">
+                </div>
+                <span class="user-name">{{ user.get('name') }}</span>
+                <a class="link" href="mailto:{{ user.get('email') }}">
+                    {{ user.get('email') }}
+                </a>
+                <a class="link"
+                   href="{{ user.get('google_plus_link') }}"
+                   target="_blank">
+                    <span class="fa fa-google-plus"></span>
+                    Profile
+                </a>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9  padding-bottom-3">
+                <h2>
+                    Skills
+                </h2>
+                {% if skills|length > 0 %}
+                    <ul class="skill-list">
+                        {% for skill in skills %}
+                            <li class="skill"
+                                data-user-id="{{ user.get('id') }}"
+                                data-skill-id="{{ skill.id }}">
+                                <span class="skill-name">
+                                    {{ skill.name }}
+                                </span>
+                                {% if endorse_counts.get(skill.id) %}
+                                    <span class="skill-endorse-count"
+                                          title="Endorses">
+                                        {{ endorse_counts.get(skill.id) }}
+                                    </span>
+                                {% endif %}
+                                {% if self_endorses.get(skill.id) %}
+                                    <a class="skill-endorse-button skill-endorse-delete-button"
+                                       title="Renounce">
+                                        <i class="fa fa-times-circle"></i>
+                                    </a>
+                                {% else %}
+                                    <a class="skill-endorse-button skill-endorse-create-button"
+                                       title="Endorse">
+                                        <i class="fa fa-check-circle"></i>
+                                    </a>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

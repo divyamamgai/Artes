@@ -17,7 +17,8 @@ class User(db.Model):
             'id': self.id,
             'name': self.name,
             'email': self.email,
-            'image_url': self.image_url
+            'image_url': self.image_url,
+            'google_plus_link': self.google_plus_link
         }
 
 
@@ -25,11 +26,10 @@ class Skill(db.Model):
     __tablename__ = 'skills'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(250), nullable=False)
+    name = db.Column(db.String(250), unique=True, nullable=False)
 
     @property
     def serialize(self):
-        """Returns serialized form of the Skill object."""
         return {
             'id': self.id,
             'name': self.name
@@ -48,7 +48,6 @@ class UserSkill(db.Model):
 
     @property
     def serialize(self):
-        """Returns serialized form of the UserSkill object."""
         return {
             'user_id': self.user_id,
             'skill_id': self.skill_id
@@ -70,7 +69,6 @@ class Endorse(db.Model):
 
     @property
     def serialize(self):
-        """Returns serialized form of the UserSkill object."""
         return {
             'user_id': self.user_id,
             'skill_id': self.skill_id,

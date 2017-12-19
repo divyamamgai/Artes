@@ -15,14 +15,19 @@
                 processData: false,
                 data: authResult['code'],
                 contentType: 'application/octet-stream; charset=utf-8',
-                success: function (result, status) {
+                success: function (response, status) {
                     if (status === 'success') {
                         w.location.href = '/';
                     } else {
-                        alert('Error occurred in the login process.\nMessage: ' + result);
-                        $loginButton.css('display', 'block');
-                        $loginLoader.css('display', 'none');
+                        alert('Error occurred in the login process, please try again!');
                     }
+                },
+                error: function () {
+                    alert('Error occurred in the login process, please try again!');
+                },
+                complete: function () {
+                    $loginButton.css('display', 'block');
+                    $loginLoader.css('display', 'none');
                 }
             });
         }

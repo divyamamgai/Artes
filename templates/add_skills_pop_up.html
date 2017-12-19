@@ -1,0 +1,15 @@
+{% extends '_pop_up.html' %}
+
+{% set id = 'pop-up-add-skills' %}
+
+{% set heading = 'Add Skills' %}
+
+{% block content %}
+    <label>Your Skills</label>
+    <select id="add-skills-input" name="skills" title="Skills" multiple
+            autocomplete="off"></select>
+    <button id="add-skills-submit-button" class="button primary float-right"
+            type="submit">
+        Add Skills
+    </button>
+{% endblock %}

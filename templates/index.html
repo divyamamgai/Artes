@@ -2,27 +2,57 @@
 
 {% set title = 'Artes - Skills' %}
 
+{% block additional_stylesheets %}
+    <link rel="stylesheet" href="/static/css/tokenize2.min.css">
+{% endblock %}
+
+{% block additional_scripts %}
+    <script type="text/javascript" src="/static/js/tokenize2.min.js"></script>
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 border-right">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 border-right padding-bottom-3">
                 <div class="photo"
-                     style="background-image: url('{{ flask_session.get('image_url') }}')"></div>
-                <span class="user-name">{{ flask_session.get('name') }}</span>
-                <a class="link"
-                   href="mailto:{{ flask_session.get('email') }}">
-                    {{ flask_session.get('email') }}
+                     style="background-image: url('{{ user.get('image_url') }}')">
+                </div>
+                <span class="user-name">{{ user.get('name') }}</span>
+                <a class="link" href="mailto:{{ user.get('email') }}">
+                    {{ user.get('email') }}
                 </a>
                 <a class="link"
-                   href="{{ flask_session.get('google_plus_link') }}"
+                   href="{{ user.get('google_plus_link') }}"
                    target="_blank">
                     <span class="fa fa-google-plus"></span>
                     Profile
                 </a>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">
-                <h2>Skills</h2>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8  padding-bottom-3">
+                <h2>
+                    Skills
+                    <a id="add-skills-button"
+                       class="button float-right primary" title="Add Skills">
+                        <span class="fa fa-plus-circle"></span>
+                        Add Skills
+                    </a>
+                </h2>
+                {% if skills|length > 0 %}
+                    <ul class="skill-list">
+                        {% for skill in skills %}
+                            <li class="skill">
+                                <span class="skill-name">
+                                    {{ skill.name }}
+                                </span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block pop_up %}
+    {% include 'add_skills_pop_up.html' %}
 {% endblock %}

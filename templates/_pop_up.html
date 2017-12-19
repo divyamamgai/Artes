@@ -1,0 +1,19 @@
+<section class="pop-up" id="{{ id }}">
+    <div class="pop-up-box">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <i class="fa fa-times-circle float-right"
+                       aria-hidden="true"></i>
+                    <h2>{{ heading }}</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 content">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

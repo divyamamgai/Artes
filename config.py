@@ -7,7 +7,7 @@ class BaseConfig(object):
     DEBUG = os.environ.get('DEBUG', True)
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL',
                                              'postgres://postgres:postgres'
-                                             '@postgres:5432/postgres')
+                                             '@localhost:5432/postgres')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     GOOGLE_CLIENT_ID = json.loads(open('google_client_secret.json',
                                        'r').read()).get('web').get('client_id')

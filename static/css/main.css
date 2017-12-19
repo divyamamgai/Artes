@@ -17,43 +17,16 @@ html, body {
 h1 {
     margin: 1rem 0;
     padding: 0;
-    font-size: 4rem;
-    font-family: Roboto, sans-serif;
+    font-size: 3.6rem;
 }
 
 h2 {
     margin: 1rem 0;
     padding: 0;
-    font-size: 3rem;
-    font-family: "Roboto Slab", serif;
-}
-
-h3 {
-    margin: 1rem 0;
-    padding: 0;
-    font-size: 2rem;
-    font-family: Roboto, sans-serif;
-}
-
-h4 {
-    margin: 1rem 0;
-    padding: 0;
-    font-size: 1.8rem;
-    font-family: "Roboto Slab", serif;
-}
-
-h5 {
-    margin: 1rem 0;
-    padding: 0;
-    font-size: 1.6rem;
-    font-family: Roboto, sans-serif;
-}
-
-h6 {
-    margin: 1rem 0;
-    padding: 0;
-    font-size: 1.3rem;
-    font-family: "Roboto Slab", serif;
+    text-transform: uppercase;
+    font-size: 2.8rem;
+    letter-spacing: 0.3rem;
+    text-shadow: 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.1);
 }
 
 a {
@@ -67,10 +40,10 @@ p {
 
 header {
     margin: 0;
-    padding: 0;
-    border-bottom: solid 1px #90A4AE;
+    padding: 0.5rem 0;
+    border-bottom: solid 0.1rem #90A4AE;
     background-color: #ECEFF1;
-    color: #565656;
+    color: #455A64;
     -webkit-box-shadow: 0 1rem 10rem rgba(0, 0, 0, 0.11);
     -moz-box-shadow: 0 1rem 10rem rgba(0, 0, 0, 0.11);
     box-shadow: 0 1rem 10rem rgba(0, 0, 0, 0.11);
@@ -84,22 +57,47 @@ header .login-header {
 
 header h1 {
     display: inline-block;
-    font-weight: 300;
+    font-size: 2.8rem;
     text-transform: uppercase;
-    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+    text-shadow: 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.1);
     letter-spacing: 0.3rem;
+}
+
+header .logo {
+    width: 3.8rem;
+    height: 3.8rem;
+    margin-bottom: -1rem;
+    fill: #37474F;
 }
 
 header .button {
     float: right;
-    margin-top: 1.5rem;
+    margin-top: 0.6rem;
 }
 
-.logo {
-    width: 4.8rem;
-    height: 4.8rem;
-    margin-bottom: -1rem;
-    fill: #37474F;
+input, textarea, select {
+    display: block;
+    margin: 0.5rem;
+    width: 100%;
+    max-width: 40rem;
+    padding: 1rem;
+    font-family: Roboto, sans-serif;
+    font-size: 1.6rem;
+    border: solid 0.1rem #aaaaaa;
+    -webkit-box-shadow: 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.1);
+}
+
+label {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+}
+
+footer {
+    padding: 3rem;
+    text-align: center;
 }
 
 .button {
@@ -117,7 +115,7 @@ header .button {
     font-weight: bold;
     letter-spacing: 0.1rem;
     text-transform: uppercase;
-    text-decoration: none;
+    text-decoration: none !important;
     -webkit-box-shadow: 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.1);
     box-shadow: 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.1);
@@ -130,7 +128,7 @@ header .button {
 }
 
 .button.primary {
-    color: #CFD8DC;
+    color: #CFD8DC !important;
     background-color: #455A64;
     border-color: #263238;
 }
@@ -149,7 +147,7 @@ header .button {
 }
 
 .button.primary:hover {
-    color: #ECEFF1;
+    color: #ECEFF1 !important;
     background-color: #546E7A;
 }
 
@@ -169,14 +167,6 @@ header .button {
 .button.primary:active {
     color: #CFD8DC;
     background-color: #37474F;
-}
-
-.border-right {
-    border-right: solid 0.1rem #90A4AE;
-}
-
-.float-right {
-    float: right;
 }
 
 .message {
@@ -236,7 +226,7 @@ header .button {
     margin-bottom: 0.5rem;
     color: #607D8B;
     font-size: 1.4rem;
-    text-decoration: none;
+    text-decoration: none !important;
     cursor: pointer;
     -webkit-transition: all 0.2s ease-in-out;
     -moz-transition: all 0.2s ease-in-out;
@@ -273,6 +263,14 @@ header .button {
     text-align: center;
 }
 
+.border-right {
+    border-right: solid 0.1rem #90A4AE;
+}
+
+.float-right {
+    float: right;
+}
+
 .margin-left-0 {
     margin-left: 0;
 }
@@ -281,23 +279,8 @@ header .button {
     margin-left: 0.5rem;
 }
 
-input, textarea, select {
-    display: block;
-    margin: 0.5rem;
-    width: 100%;
-    max-width: 40rem;
-    padding: 1rem;
-    font-family: Roboto, sans-serif;
-    font-size: 1.6rem;
-    border: solid 0.1rem #aaaaaa;
-    -webkit-box-shadow: 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.1);
-    box-shadow: 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.1);
-}
-
-footer {
-    padding: 3rem;
-    text-align: center;
+.padding-bottom-3 {
+    padding-bottom: 3rem;
 }
 
 .fa-github {
@@ -338,6 +321,125 @@ footer {
     transform-origin: 50% 50%;
 }
 
+.pop-up {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.pop-up.show {
+    display: block;
+}
+
+.pop-up-box {
+    position: relative;
+    top: 3rem;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 60rem;
+    -webkit-border-radius: 0.5rem;
+    -moz-border-radius: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: #ECEFF1;
+    -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+.pop-up .fa-times-circle {
+    margin-top: 1.5rem;
+    font-size: 2.4rem;
+    cursor: pointer;
+    color: #9C1A1C;
+    z-index: 2;
+}
+
+.pop-up .fa-times-circle:hover {
+    color: #cd1c1e;
+}
+
+.pop-up .content {
+    padding-top: 0.5rem;
+    padding-bottom: 1rem;
+}
+
+.tokens-container {
+    -webkit-border-radius: 0.4rem;
+    -moz-border-radius: 0.4rem;
+    border-radius: 0.4rem;
+    border: solid 0.1rem #263238;
+}
+
+.tokenize input {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.skill-list {
+    margin: 0;
+    padding: 0;
+}
+
+.skill {
+    margin-bottom: 0.5rem;
+    font-size: 1.6rem;
+    list-style: none;
+    cursor: default;
+}
+
+.skill-endorse-count {
+    display: inline-block;
+    position: relative;
+    top: -0.2rem;
+    padding: 0.2rem 0.7rem;
+    margin-left: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    background-color: #37474F;
+    color: #B0BEC5;
+    -webkit-border-radius: 0.5rem;
+    -moz-border-radius: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.skill-endorse-button {
+    display: none;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    text-shadow: 0.1rem 0.1rem 0 rgba(0, 0, 0, 0.1);
+}
+
+.skill-endorse-create-button {
+    color: #2E7D32 !important;
+}
+
+.skill-endorse-create-button:hover {
+    color: #43A047 !important;
+}
+
+.skill-endorse-delete-button {
+    color: #C62828 !important;
+}
+
+.skill-endorse-delete-button:hover {
+    color: #E53935 !important;
+}
+
+.skill:hover .skill-endorse-button {
+    display: inline-block;
+}
+
 @keyframes fa-spinner-animation {
     from {
         -webkit-transform: rotate(0deg);
@@ -352,5 +454,11 @@ footer {
         -ms-transform: rotate(360deg);
         -o-transform: rotate(360deg);
         transform: rotate(360deg);
+    }
+}
+
+@media all and (max-width: 767px) {
+    .border-right {
+        border-right: none;
     }
 }
