@@ -361,7 +361,8 @@ def skills_add():
             db.session.commit()
 
             response = make_response(
-                json.dumps(map((lambda x: x.serialize), added_skills)), 201)
+                json.dumps(list(map((lambda x: x.serialize), added_skills))),
+                201)
 
         except sqlalchemy_exc.SQLAlchemyError:
             response = make_response(
