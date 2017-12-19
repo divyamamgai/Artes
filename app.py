@@ -328,7 +328,7 @@ def skills_search(name):
 
     skills = db.session.query(Skill) \
         .filter(Skill.name.like('%' + name + '%')) \
-        .filter(~sqlalchemy_sql.exists(['skill_id'])
+        .filter(~sqlalchemy_sql.exists([sqlalchemy_text('skill_id')])
                 .where(sqlalchemy_sql
                        .and_(UserSkill.user_id == user_id,
                              UserSkill.skill_id == Skill.id)))
