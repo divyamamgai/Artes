@@ -61,13 +61,15 @@
         .on('click', '.pop-up .fa-times-circle', function () {
             // Hide the pop up shown on clicking close button.
             $(this).parent().parent().parent().parent().parent()
-                .css('display', 'none');
+                .addClass('hide');
         })
         .on('click', '#add-skills-button', function () {
-            $('#pop-up-add-skills', d).css('display', 'block');
+            $('#pop-up-add-skills', d).removeClass('hide');
         })
         .on('click', '#add-skills-submit-button', function () {
+            /** @type JQuery */
             var $addSkillsSubmitButton = $(this);
+
             $.ajax('/skills/add/', {
                 method: 'POST',
                 data: {
@@ -82,7 +84,7 @@
                     appendSkills(skills);
 
                     $('#pop-up-add-skills', d)
-                        .css('display', 'none');
+                        .addClass('hide');
                 },
                 error: function () {
                     alert('Error occurred while adding skills, please try again!');
@@ -99,7 +101,7 @@
                 $skill = $skillEndorseCreateButton.parent(),
                 $skillEndorseCount = $('.skill-endorse-count', $skill),
                 $skillEndorseDeleteButton = $('.skill-endorse-delete-button', $skill),
-                $skillEndorseLoading = $('.skill-endorse-loading', $skill);
+                $skillOperationLoading = $('.skill-operation-loading', $skill);
 
             var userID = $skill.data('user-id'),
                 skillID = $skill.data('skill-id');
@@ -107,7 +109,7 @@
             $.ajax('/user/' + userID + '/endorse/' + skillID, {
                 method: 'POST',
                 beforeSend: function () {
-                    $skillEndorseLoading.removeClass('hide');
+                    $skillOperationLoading.removeClass('hide');
                     $skillEndorseCreateButton.addClass('hide');
                 },
                 success: function (endorse) {
@@ -121,7 +123,7 @@
                     $skillEndorseCreateButton.removeClass('hide');
                 },
                 complete: function () {
-                    $skillEndorseLoading.addClass('hide');
+                    $skillOperationLoading.addClass('hide');
                 }
             });
         })
@@ -131,7 +133,7 @@
                 $skill = $skillEndorseDeleteButton.parent(),
                 $skillEndorseCount = $('.skill-endorse-count', $skill),
                 $skillEndorseCreateButton = $('.skill-endorse-create-button', $skill),
-                $skillEndorseLoading = $('.skill-endorse-loading', $skill);
+                $skillOperationLoading = $('.skill-operation-loading', $skill);
 
             var userID = $skill.data('user-id'),
                 skillID = $skill.data('skill-id');
@@ -139,7 +141,7 @@
             $.ajax('/user/' + userID + '/endorse/' + skillID, {
                 method: 'DELETE',
                 beforeSend: function () {
-                    $skillEndorseLoading.removeClass('hide');
+                    $skillOperationLoading.removeClass('hide');
                     $skillEndorseDeleteButton.addClass('hide');
                 },
                 success: function (endorse) {
@@ -161,7 +163,33 @@
                     $skillEndorseDeleteButton.removeClass('hide');
                 },
                 complete: function () {
-                    $skillEndorseLoading.addClass('hide');
+                    $skillOperationLoading.addClass('hide');
+                }
+            });
+        })
+        .on('click', '.skill-delete-button', function () {
+            /** @type JQuery */
+            var $skillDeleteButton = $(this),
+                $skill = $skillDeleteButton.parent(),
+                $skillOperationLoading = $('.skill-operation-loading', $skill);
+
+            var skillID = $skill.data('skill-id');
+
+            $.ajax('/user/skills/' + skillID, {
+                method: 'DELETE',
+                beforeSend: function () {
+                    $skillOperationLoading.removeClass('hide');
+                    $skillDeleteButton.addClass('hide');
+                },
+                success: function (user_skill) {
+                    $skill.remove();
+                },
+                error: function () {
+                    alert('Error occurred while deleting skill, please try again!');
+                    $skillDeleteButton.removeClass('hide');
+                },
+                complete: function () {
+                    $skillOperationLoading.addClass('hide');
                 }
             });
         });

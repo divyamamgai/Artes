@@ -65,8 +65,13 @@
                                        title="Endorse">
                                         <i class="fa fa-check-circle"></i>
                                     </a>
+                                {% else %}
+                                    <a class="skill-delete-button"
+                                       title="Delete">
+                                        <i class="fa fa-times-circle"></i>
+                                    </a>
                                 {% endif %}
-                                <span class="skill-endorse-loading fa fa-spinner hide"></span>
+                                <span class="skill-operation-loading fa fa-spinner hide"></span>
                                 {% if endorsers.get(skill_id) %}
                                     <div class="float-right">
                                         {% for endorser in endorsers.get(skill_id) %}

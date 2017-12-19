@@ -322,7 +322,7 @@ footer {
 }
 
 .pop-up {
-    display: none;
+    display: block;
     position: fixed;
     top: 0;
     left: 0;
@@ -428,7 +428,8 @@ footer {
     border-radius: 0.5rem;
 }
 
-.skill-endorse-button {
+.skill-endorse-button,
+.skill-delete-button {
     display: none;
     margin-left: 0.5rem;
     cursor: pointer;
@@ -443,15 +444,18 @@ footer {
     color: #43A047 !important;
 }
 
-.skill-endorse-delete-button {
+.skill-endorse-delete-button,
+.skill-delete-button {
     color: #C62828 !important;
 }
 
-.skill-endorse-delete-button:hover {
+.skill-endorse-delete-button:hover,
+.skill-delete-button:hover {
     color: #E53935 !important;
 }
 
-.skill:hover .skill-endorse-button {
+.skill:hover .skill-endorse-button,
+.skill:hover .skill-delete-button {
     display: inline-block;
 }
 
@@ -459,7 +463,7 @@ footer {
     display: none !important;
 }
 
-.skill-endorse-loading {
+.skill-operation-loading {
     display: inline-block;
     margin-left: 0.5rem;
     text-shadow: 0.1rem 0.1rem 0 rgba(0, 0, 0, 0.1);

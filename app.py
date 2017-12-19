@@ -375,6 +375,29 @@ def skills_add():
     return response
 
 
+@app.route('/user/skills/<int:skill_id>', methods=['DELETE'])
+@authorized
+def user_skill_delete(skill_id):
+    user_skill = get_user_skill(flask_session.get('user').get('id'), skill_id)
+
+    if user_skill is not None:
+        try:
+            db.session.delete(user_skill)
+            db.session.commit()
+
+            response = make_response(
+                json.dumps(user_skill.serialize), 200)
+        except sqlalchemy_exc.SQLAlchemyError:
+            response = make_response(
+                json.dumps('Error occurred while deleting the user skill!'),
+                500)
+    else:
+        response = make_response(json.dumps('User skill not found!'), 400)
+
+    response.headers['Content-Type'] = 'application/json'
+    return response
+
+
 @app.route('/user/<int:user_id>/endorse/<int:skill_id>',
            methods=['POST', 'DELETE'])
 @authorized
