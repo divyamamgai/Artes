@@ -279,8 +279,8 @@ footer {
     margin-left: 0.5rem;
 }
 
-.padding-bottom-3 {
-    padding-bottom: 3rem;
+.padding-bottom-1-dot-5 {
+    padding-bottom: 1.5rem;
 }
 
 .fa-github {
@@ -387,15 +387,25 @@ footer {
 }
 
 .skill-list {
-    margin: 0;
+    margin: 2rem 0 0 0;
     padding: 0;
 }
 
 .skill {
-    margin-bottom: 0.5rem;
+    padding: 1.5rem 0.2rem 1.5rem 1.5rem;
+    border: solid 0.1rem #90A4AE;
+    border-top: none;
     font-size: 1.6rem;
     list-style: none;
     cursor: default;
+}
+
+.skill:first-of-type {
+    border-top: solid 0.1rem #90A4AE;
+}
+
+.skill:hover {
+    background-color: #B0BEC5;
 }
 
 .skill-endorse-count {
@@ -438,6 +448,40 @@ footer {
 
 .skill:hover .skill-endorse-button {
     display: inline-block;
+}
+
+.hide {
+    display: none !important;
+}
+
+.skill-endorse-loading {
+    display: inline-block;
+    margin-left: 0.5rem;
+    text-shadow: 0.1rem 0.1rem 0 rgba(0, 0, 0, 0.1);
+}
+
+.skill-endorser-photo {
+    display: inline-block;
+    width: 5rem;
+    height: 5rem;
+    margin-top: -1.3rem;
+    margin-left: -2rem;
+    background: url('/static/drawable/png/user.png') center;
+    -webkit-background-size: cover;
+    background-size: cover;
+    -webkit-border-radius: 2.5rem;
+    -moz-border-radius: 2.5rem;
+    border-radius: 2.5rem;
+    border: solid 0.2rem #CFD8DC;
+    z-index: 1;
+}
+
+.skill-endorser-photo:hover {
+    border-color: #263238;
+    -webkit-box-shadow: 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.1);
+    z-index: 2;
 }
 
 @keyframes fa-spinner-animation {

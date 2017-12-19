@@ -1,5 +1,5 @@
 (function (w, d, $) {
-    /** @type jQuery */
+    /** @type JQuery */
     var $addSkillsInput,
         $skillList,
         $skillCache = $('<li class="skill"><span class="skill-name"></span></li>');
@@ -12,7 +12,7 @@
     function appendSkills(skills) {
         var skill;
 
-        /** @type jQuery */
+        /** @type JQuery */
         var $skill;
 
         for (var skill_index = 0; skill_index < skills.length; skill_index++) {
@@ -83,19 +83,74 @@
             });
         })
         .on('click', '.skill-endorse-create-button', function () {
-            /** @type jQuery */
-            var $skill = $(this).parent();
+            /** @type JQuery */
+            var $skillEndorseCreateButton = $(this),
+                $skill = $skillEndorseCreateButton.parent(),
+                $skillEndorseCount = $('.skill-endorse-count', $skill),
+                $skillEndorseDeleteButton = $('.skill-endorse-delete-button', $skill),
+                $skillEndorseLoading = $('.skill-endorse-loading', $skill);
 
             var userID = $skill.data('user-id'),
                 skillID = $skill.data('skill-id');
 
             $.ajax('/user/' + userID + '/endorse/' + skillID, {
                 method: 'POST',
+                beforeSend: function () {
+                    $skillEndorseLoading.removeClass('hide');
+                    $skillEndorseCreateButton.addClass('hide');
+                },
                 success: function (endorse) {
-                    console.log(endorse);
+                    $skillEndorseCount
+                        .text(parseInt($skillEndorseCount.text()) + 1)
+                        .removeClass('hide');
+                    $skillEndorseDeleteButton.removeClass('hide');
                 },
                 error: function () {
                     alert('Error occurred while endorsing, please try again!');
+                    $skillEndorseCreateButton.removeClass('hide');
+                },
+                complete: function () {
+                    $skillEndorseLoading.addClass('hide');
+                }
+            });
+        })
+        .on('click', '.skill-endorse-delete-button', function () {
+            /** @type JQuery */
+            var $skillEndorseDeleteButton = $(this),
+                $skill = $skillEndorseDeleteButton.parent(),
+                $skillEndorseCount = $('.skill-endorse-count', $skill),
+                $skillEndorseCreateButton = $('.skill-endorse-create-button', $skill),
+                $skillEndorseLoading = $('.skill-endorse-loading', $skill);
+
+            var userID = $skill.data('user-id'),
+                skillID = $skill.data('skill-id');
+
+            $.ajax('/user/' + userID + '/endorse/' + skillID, {
+                method: 'DELETE',
+                beforeSend: function () {
+                    $skillEndorseLoading.removeClass('hide');
+                    $skillEndorseDeleteButton.addClass('hide');
+                },
+                success: function (endorse) {
+                    var skillEndorseCount = parseInt($skillEndorseCount.text()) - 1;
+                    var $skillEndorserPhotoUser = $('.skill-endorser-photo-user-' + endorse.endorser_id, $skill);
+                    $skillEndorseCount
+                        .text(skillEndorseCount);
+                    if (skillEndorseCount === 0) {
+                        $skillEndorseCount.addClass('hide');
+                    }
+                    $skillEndorseCreateButton.removeClass('hide');
+                    $skillEndorseDeleteButton.addClass('hide');
+                    if ($skillEndorserPhotoUser.length > 0) {
+                        $skillEndorserPhotoUser.remove();
+                    }
+                },
+                error: function () {
+                    alert('Error occurred while renouncing your endorsement, please try again!');
+                    $skillEndorseDeleteButton.removeClass('hide');
+                },
+                complete: function () {
+                    $skillEndorseLoading.addClass('hide');
                 }
             });
         });

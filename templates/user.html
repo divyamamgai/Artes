@@ -20,35 +20,54 @@
                     Profile
                 </a>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9  padding-bottom-3">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9  padding-bottom-1-dot-5">
                 <h2>
                     Skills
+                    {% if user.get('id') == flask_session.get('user').get('id') %}
+                        <a id="add-skills-button"
+                           class="button float-right primary"
+                           title="Add Skills">
+                            <span class="fa fa-plus-circle"></span>
+                            Add Skills
+                        </a>
+                    {% endif %}
                 </h2>
-                {% if skills|length > 0 %}
+                {% if endorse_counts|length > 0 %}
                     <ul class="skill-list">
-                        {% for skill in skills %}
+                        {% for endorse_count in endorse_counts %}
+                            {% set user_id = endorse_count[0] %}
+                            {% set skill_id = endorse_count[1] %}
+                            {% set count = endorse_count[2] %}
                             <li class="skill"
-                                data-user-id="{{ user.get('id') }}"
-                                data-skill-id="{{ skill.id }}">
+                                data-user-id="{{ user_id }}"
+                                data-skill-id="{{ skill_id }}">
                                 <span class="skill-name">
-                                    {{ skill.name }}
+                                    {{ skills_dict.get(skill_id) }}
                                 </span>
-                                {% if endorse_counts.get(skill.id) %}
-                                    <span class="skill-endorse-count"
-                                          title="Endorses">
-                                        {{ endorse_counts.get(skill.id) }}
-                                    </span>
-                                {% endif %}
-                                {% if self_endorses.get(skill.id) %}
-                                    <a class="skill-endorse-button skill-endorse-delete-button"
+                                <span class="skill-endorse-count {{ 'hide' if count == 0 }}"
+                                      title="Endorses">
+                                    {{ count }}
+                                </span>
+                                {% if user_id != flask_session.get('user').get('id') %}
+                                    <a class="skill-endorse-button skill-endorse-delete-button {{ 'hide' if not self_endorses.get(skill_id) }}"
                                        title="Renounce">
                                         <i class="fa fa-times-circle"></i>
                                     </a>
-                                {% else %}
-                                    <a class="skill-endorse-button skill-endorse-create-button"
+                                    <a class="skill-endorse-button skill-endorse-create-button {{ 'hide' if self_endorses.get(skill_id) }}"
                                        title="Endorse">
                                         <i class="fa fa-check-circle"></i>
                                     </a>
+                                {% endif %}
+                                <span class="skill-endorse-loading fa fa-spinner hide"></span>
+                                {% if endorsers.get(skill_id) %}
+                                    <div class="float-right">
+                                        {% for endorser in endorsers.get(skill_id) %}
+                                            <a class="skill-endorser-photo float-right skill-endorser-photo-user-{{ endorser.id }}"
+                                               style="background-image: url('{{ endorser.image_url }}');"
+                                               href="{{ url_for('user_profile', email=endorser.email) }}">
+                                            </a>
+                                        {% endfor %}
+                                    </div>
                                 {% endif %}
                             </li>
                         {% endfor %}
@@ -57,4 +76,10 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block pop_up %}
+    {% if user.get('id') == flask_session.get('user').get('id') %}
+        {% include 'add_skills_pop_up.html' %}
+    {% endif %}
 {% endblock %}

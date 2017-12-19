@@ -11,3 +11,8 @@ class BaseConfig(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     GOOGLE_CLIENT_ID = json.loads(open('google_client_secret.json',
                                        'r').read()).get('web').get('client_id')
+    # Number of top endorsement for which to show detailed information such
+    # as endorsers images as profile links.
+    ENDORSEMENT_TOP_LIMIT = 5
+    # Number of endorsers to show for each each top endorsement for the user.
+    ENDORSER_DETAIL_LIMIT = 5

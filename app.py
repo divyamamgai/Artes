@@ -74,16 +74,20 @@ def get_user_skill(user_id, skill_id):
 
 
 def get_endorse_counts(user_id):
-    endorse_counts = db.session.query(Endorse.skill_id,
+    endorse_counts = db.session.query(UserSkill.user_id, UserSkill.skill_id,
                                       sqlalchemy_func.count(
                                           Endorse.endorser_id).label(
                                           'endorse_count')) \
-        .filter(Endorse.user_id == user_id) \
-        .group_by(Endorse.skill_id) \
+        .filter(UserSkill.user_id == user_id) \
+        .outerjoin(Endorse,
+                   sqlalchemy_sql.and_(
+                       Endorse.user_id == UserSkill.user_id,
+                       Endorse.skill_id == UserSkill.skill_id)) \
+        .group_by(UserSkill.user_id, UserSkill.skill_id) \
         .order_by(sqlalchemy_text('endorse_count DESC')) \
         .all()
 
-    return dict(endorse_counts)
+    return endorse_counts
 
 
 def get_self_endorses(user_id, endorser_id):
@@ -94,6 +98,26 @@ def get_self_endorses(user_id, endorser_id):
         .all()
 
     return dict(self_endorses)
+
+
+def get_endorse(user_id, skill_id, endorser_id):
+    endorse = db.session.query(Endorse) \
+        .filter(Endorse.user_id == user_id,
+                Endorse.skill_id == skill_id,
+                Endorse.endorser_id == endorser_id) \
+        .first()
+
+    return endorse
+
+
+def get_endorsers(user_id, skill_id):
+    endorsers = db.session.query(Endorse.user_id, User) \
+        .join(User, User.id == Endorse.endorser_id) \
+        .filter(Endorse.user_id == user_id, Endorse.skill_id == skill_id) \
+        .limit(app.config.get('ENDORSER_DETAIL_LIMIT')) \
+        .all()
+
+    return map(lambda endorser: endorser[1], endorsers)
 
 
 @app.route('/login', methods=['GET'])
@@ -293,12 +317,8 @@ def authorized_redirect(func):
 @app.route('/', methods=['GET'])
 @authorized_redirect
 def index():
-    user = flask_session.get('user')
-
-    skills = get_user_skills(user.get('id'))
-
-    return render_template('index.html', flask_session=flask_session,
-                           user=user, skills=skills)
+    return redirect(
+        url_for('user_profile', email=flask_session.get('user').get('email')))
 
 
 @app.route('/skills/search/<string:name>', methods=['GET'])
@@ -354,24 +374,42 @@ def skills_add():
     return response
 
 
-@app.route('/user/<int:user_id>/endorse/<int:skill_id>', methods=['POST'])
+@app.route('/user/<int:user_id>/endorse/<int:skill_id>',
+           methods=['POST', 'DELETE'])
 @authorized
-def user_skill_endorse_add(user_id, skill_id):
+def user_skill_endorse(user_id, skill_id):
     user_skill = get_user_skill(user_id, skill_id)
     endorser_id = flask_session.get('user').get('id')
 
     if user_skill is not None:
-        try:
-            endorse = Endorse(user_id=user_id, skill_id=skill_id,
-                              endorser_id=endorser_id)
-            db.session.add(endorse)
-            db.session.commit()
+        if request.method == 'POST':
+            try:
+                endorse = Endorse(user_id=user_id, skill_id=skill_id,
+                                  endorser_id=endorser_id)
+                db.session.add(endorse)
+                db.session.commit()
 
-            response = make_response(json.dumps(endorse.serialize), 200)
-        except sqlalchemy_exc.SQLAlchemyError:
-            response = make_response(
-                json.dumps('Error occurred while endorsing user skill!'),
-                400)
+                response = make_response(json.dumps(endorse.serialize), 200)
+            except sqlalchemy_exc.SQLAlchemyError:
+                response = make_response(
+                    json.dumps('Error occurred while creating endorsement!'),
+                    400)
+
+        elif request.method == 'DELETE':
+            try:
+                endorse = get_endorse(user_id, skill_id, endorser_id)
+                db.session.delete(endorse)
+                db.session.commit()
+
+                response = make_response(json.dumps(endorse.serialize), 200)
+            except sqlalchemy_exc.SQLAlchemyError:
+                response = make_response(
+                    json.dumps('Error occurred while deleting endorsement!'),
+                    400)
+
+        else:
+            response = make_response(json.dumps('Invalid request method!'),
+                                     400)
     else:
         response = make_response(json.dumps('User skill does not exists!'),
                                  400)
@@ -385,20 +423,27 @@ def user_skill_endorse_add(user_id, skill_id):
 def user_profile(email):
     user = get_user(email).serialize
 
-    if user.get('id') == flask_session.get('user').get('id'):
-        return redirect(url_for('index'))
-
     skills = get_user_skills(user.get('id'))
 
+    skills_dict = dict(map(lambda skill: (skill.id, skill.name), skills))
+
     endorse_counts = get_endorse_counts(user.get('id'))
+
+    top_skills = map(lambda endorse_count: endorse_count[1],
+                     filter(lambda endorse_count: endorse_count[2] > 0,
+                            endorse_counts[
+                            :app.config.get('ENDORSEMENT_TOP_LIMIT')]))
+
+    endorsers = dict(map(lambda top_skill: (
+        top_skill, get_endorsers(user.get('id'), top_skill)), top_skills))
 
     self_endorses = get_self_endorses(user.get('id'),
                                       flask_session.get('user').get('id'))
 
     return render_template('user.html', flask_session=flask_session,
-                           user=user, skills=skills,
+                           user=user, skills_dict=skills_dict,
                            endorse_counts=endorse_counts,
-                           self_endorses=self_endorses)
+                           self_endorses=self_endorses, endorsers=endorsers)
 
 
 if __name__ == '__main__':
