@@ -334,7 +334,7 @@ def skills_search(name):
                              UserSkill.skill_id == Skill.id)))
 
     response = make_response(
-        json.dumps(map((lambda x: x.serialize), skills.all())),
+        json.dumps(list(map((lambda x: x.serialize), skills.all()))),
         200)
     response.headers['Content-Type'] = 'application/json'
     return response
